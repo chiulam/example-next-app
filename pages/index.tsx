@@ -2,8 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import { createThirdwebClient } from "thirdweb";
+import { ConnectButton } from "thirdweb/react";
+import { createWallet } from "thirdweb/wallets";
 
 const inter = Inter({ subsets: ["latin"] });
+const ThirdwebClient = createThirdwebClient({
+  clientId: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID ?? "",
+});
 
 export default function Home() {
   return (
@@ -49,7 +55,13 @@ export default function Home() {
             priority
           />
         </div>
-
+        <ConnectButton
+          client={ThirdwebClient}
+          wallets={[createWallet("walletConnect")]}
+          walletConnect={{
+            projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ?? "",
+          }}
+        />
         <div className={styles.grid}>
           <a
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
